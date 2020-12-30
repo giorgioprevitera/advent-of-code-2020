@@ -19,3 +19,16 @@ func TestPartOne(t *testing.T) {
 	assert.Equal(t, expectedOutput, actualOutput)
 
 }
+
+func TestPartTwo(t *testing.T) {
+	input, err := getInput("test-input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	expectedOutput := 8
+	actualOutput := getPartTwoAnswer(&input)
+
+	assert.Equal(t, expectedOutput, actualOutput)
+
+}
