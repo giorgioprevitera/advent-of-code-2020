@@ -13,7 +13,7 @@ func TestPartOne(t *testing.T) {
 		"2-9 c: ccccccccc",
 	}
 	expectedOutput := 2
-	actualOutput := countValidPasswords(input, partOne)
+	actualOutput := countValidPasswords(&input, partOne)
 	assert.Equal(t, expectedOutput, actualOutput)
 }
 
@@ -24,6 +24,6 @@ func TestPartTwo(t *testing.T) {
 		"2-9 c: ccccccccc",
 	}
 	expectedOutput := 1
-	actualOutput := countValidPasswords(input, partTwo)
+	actualOutput := countValidPasswords(&input, partTwo)
 	assert.Equal(t, expectedOutput, actualOutput)
 }

@@ -17,7 +17,7 @@ func TestPartOne(t *testing.T) {
 	}
 	expectedOutput := 514579
 
-	actualOutput, err := searchAnswerPartOne(input, 2020)
+	actualOutput, err := searchAnswerPartOne(&input, 2020)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func TestPartTwo(t *testing.T) {
 	}
 	expectedOutput := 241861950
 
-	actualOutput, err := searchAnswerPartTwo(input, 2020)
+	actualOutput, err := searchAnswerPartTwo(&input, 2020)
 	if err != nil {
 		t.Fatal(err)
 	}

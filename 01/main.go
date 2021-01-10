@@ -1,37 +1,15 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"log"
-	"os"
-	"strconv"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
-func getInput() ([]int, error) {
-	f, err := os.Open("input.txt")
-	if err != nil {
-		return []int{}, err
-	}
-	defer f.Close()
-
-	input := []int{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			return []int{}, err
-		}
-		input = append(input, i)
-	}
-
-	return input, nil
-}
-
-func searchAnswerPartOne(input []int, sum int) (int, error) {
-	for i, x := range input {
-		for _, y := range input[i:] {
+func searchAnswerPartOne(input *[]int, sum int) (int, error) {
+	for i, x := range *input {
+		for _, y := range (*input)[i:] {
 			if x+y == sum {
 				return x * y, nil
 			}
@@ -41,10 +19,10 @@ func searchAnswerPartOne(input []int, sum int) (int, error) {
 	return -1, errors.New("Answer not found")
 }
 
-func searchAnswerPartTwo(input []int, sum int) (int, error) {
-	for i, x := range input {
-		for j, y := range input[i:] {
-			for _, z := range input[j:] {
+func searchAnswerPartTwo(input *[]int, sum int) (int, error) {
+	for i, x := range *input {
+		for j, y := range (*input)[i:] {
+			for _, z := range (*input)[j:] {
 				if x+y+z == sum {
 					return x * y * z, nil
 				}
@@ -56,9 +34,9 @@ func searchAnswerPartTwo(input []int, sum int) (int, error) {
 }
 
 func main() {
-	input, err := getInput()
-	if err != nil {
-		log.Fatalf("Unable to get input: %s", err)
+	input, ok := advent.GetInput("input.txt").(*[]int)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
 
 	answerPartOne, err := searchAnswerPartOne(input, 2020)

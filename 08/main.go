@@ -1,30 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
-
-func getInput(filename string) ([]string, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return []string{}, err
-	}
-	defer f.Close()
-
-	input := []string{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return input, nil
-}
 
 func getPartOneAnswer(input *[]string) int {
 	acc := 0
@@ -118,14 +100,14 @@ func getPartTwoAnswer(input *[]string) int {
 }
 
 func main() {
-	input, err := getInput("input.txt")
-	if err != nil {
-		log.Fatal(err)
+	input, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
 
-	answerToPartOne := getPartOneAnswer(&input)
+	answerToPartOne := getPartOneAnswer(input)
 	log.Printf("Answer to part one: %d\n", answerToPartOne)
 
-	answerToPartTwo := getPartTwoAnswer(&input)
+	answerToPartTwo := getPartTwoAnswer(input)
 	log.Printf("Answer to part two: %d\n", answerToPartTwo)
 }

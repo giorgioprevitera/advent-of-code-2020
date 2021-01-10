@@ -1,35 +1,18 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"sort"
-	"strconv"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 type Input []int
 
-func getInput(filename string) *Input {
-	var input Input
-
-	f, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	input = append(input, 0)
-	for scanner.Scan() {
-		i, _ := strconv.Atoi(scanner.Text())
-		input = append(input, i)
-	}
-
-	sort.Ints(input)
-	input = append(input, input[len(input)-1]+3)
-	return &input
+func (input *Input) normalise() {
+	sort.Ints(*input)
+	*input = append([]int{0}, *input...)
+	*input = append(*input, (*input)[len(*input)-1]+3)
 }
 
 func getPartOneAnswer(input *Input) int {
@@ -68,11 +51,16 @@ func getPartTwoAnswer(input *Input, index int) int {
 }
 
 func main() {
-	input := getInput("input.txt")
+	i, ok := advent.GetInput("input.txt").(*[]int)
+	if !ok {
+		log.Fatal(ok)
+	}
+	input := Input(*i)
+	input.normalise()
 
-	answerPartOne := getPartOneAnswer(input)
+	answerPartOne := getPartOneAnswer(&input)
 	log.Printf("Answer to part one: %d\n", answerPartOne)
 
-	answerPartTwo := getPartTwoAnswer(input, 0)
+	answerPartTwo := getPartTwoAnswer(&input, 0)
 	log.Printf("Answer to part two: %d\n", answerPartTwo)
 }

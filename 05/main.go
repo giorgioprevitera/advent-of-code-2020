@@ -1,34 +1,16 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"sort"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 const (
 	rowMovements    = "FB"
 	columnMovements = "LR"
 )
-
-func getInput() ([]string, error) {
-	f, err := os.Open("input.txt")
-	if err != nil {
-		return []string{}, err
-	}
-	defer f.Close()
-
-	input := []string{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return input, nil
-}
 
 func getPosition(characters string, positions []int, movements string) int {
 	if len(positions) == 1 {
@@ -84,13 +66,13 @@ func findMissingID(s *[]int) int {
 }
 
 func main() {
-	input, err := getInput()
-	if err != nil {
-		log.Fatalln(err)
+	input, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
 
 	seatIDs := &[]int{}
-	for _, i := range input {
+	for _, i := range *input {
 		*seatIDs = append(*seatIDs, getSeatID(i))
 	}
 

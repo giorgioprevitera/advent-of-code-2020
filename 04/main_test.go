@@ -1,16 +1,20 @@
 package main
 
 import (
+	"log"
 	"testing"
 
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPartOne(t *testing.T) {
-	input, err := getInput("test-part-one-input.txt")
-	if err != nil {
-		t.Fatal(err)
+	i, ok := advent.GetInput("test-part-one-input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
+
+	input := Input(*i)
 
 	expectedOutput := 2
 
@@ -27,10 +31,11 @@ func TestPartOne(t *testing.T) {
 
 func TestPartTwo(t *testing.T) {
 	t.Run("Test invalid passports", func(t *testing.T) {
-		input, err := getInput("test-part-two-invalid-input.txt")
-		if err != nil {
-			t.Fatal(err)
+		i, ok := advent.GetInput("./test-part-two-invalid-input.txt").(*[]string)
+		if !ok {
+			log.Fatalln("Unable to make type assertion on input")
 		}
+		input := Input(*i)
 
 		expectedOutput := 0
 
@@ -46,10 +51,11 @@ func TestPartTwo(t *testing.T) {
 
 	})
 	t.Run("Test valid passports", func(t *testing.T) {
-		input, err := getInput("test-part-two-valid-input.txt")
-		if err != nil {
-			t.Fatal(err)
+		i, ok := advent.GetInput("./test-part-two-valid-input.txt").(*[]string)
+		if !ok {
+			log.Fatalln("Unable to make type assertion on input")
 		}
+		input := Input(*i)
 
 		expectedOutput := 4
 

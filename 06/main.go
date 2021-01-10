@@ -1,9 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 type Input []string
@@ -14,24 +14,6 @@ type group struct {
 }
 
 type Groups map[int]*group
-
-func getInput(filename string) (*Input, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return &Input{}, err
-	}
-	defer f.Close()
-
-	input := Input{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return &input, nil
-}
 
 func countchars(s string) int {
 	return 1
@@ -90,13 +72,14 @@ func getAnswerPartTwo(i *Input) int {
 }
 
 func main() {
-	input, err := getInput("input.txt")
-	if err != nil {
-		log.Fatal(err)
+	i, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
+	input := Input(*i)
 
-	answerPartOne := getAnswerPartOne(input)
-	answerPartTwo := getAnswerPartTwo(input)
+	answerPartOne := getAnswerPartOne(&input)
+	answerPartTwo := getAnswerPartTwo(&input)
 
 	log.Printf("Answer to part one: %d", answerPartOne)
 	log.Printf("Answer to part two: %d", answerPartTwo)

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 type Input []string
@@ -22,24 +22,6 @@ type bag struct {
 }
 
 type bags []bag
-
-func getInput(filename string) (*Input, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return &Input{}, err
-	}
-	defer f.Close()
-
-	input := Input{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return &input, nil
-}
 
 func (i *Input) parse() bags {
 	allBags := bags{}
@@ -138,10 +120,11 @@ func getPartTwoAnswer(bags *bags, color string) int {
 }
 
 func main() {
-	input, err := getInput("input.txt")
-	if err != nil {
-		log.Fatal(err)
+	i, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
+	input := Input(*i)
 
 	bags := input.parse()
 	myColor := "shiny gold"

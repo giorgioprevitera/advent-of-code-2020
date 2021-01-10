@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 const (
@@ -16,24 +16,6 @@ const (
 var functionsMap = map[int]func(string) bool{
 	partOne: inputContainsValidPasswordPartOne,
 	partTwo: inputContainsValidPasswordPartTwo,
-}
-
-func getInput() ([]string, error) {
-	f, err := os.Open("input.txt")
-	if err != nil {
-		return []string{}, err
-	}
-	defer f.Close()
-
-	input := []string{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return input, nil
 }
 
 func inputContainsValidPasswordPartOne(i string) bool {
@@ -75,10 +57,10 @@ func inputContainsValidPasswordPartTwo(i string) bool {
 	return true
 }
 
-func countValidPasswords(input []string, part int) int {
+func countValidPasswords(input *[]string, part int) int {
 	validPasswordsCount := 0
 
-	for _, i := range input {
+	for _, i := range *input {
 		if functionsMap[part](i) {
 			validPasswordsCount++
 		}
@@ -88,9 +70,9 @@ func countValidPasswords(input []string, part int) int {
 }
 
 func main() {
-	input, err := getInput()
-	if err != nil {
-		log.Fatalln(err)
+	input, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
 
 	answerPartOne := countValidPasswords(input, partOne)

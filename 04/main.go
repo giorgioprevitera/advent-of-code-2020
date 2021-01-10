@@ -1,12 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/giorgioprevitera/advent-of-code-2020/advent"
 )
 
 type Input []string
@@ -46,24 +46,6 @@ func contains(v *[]string, s string) bool {
 	}
 
 	return false
-}
-
-func getInput(filename string) (*Input, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return &Input{}, err
-	}
-	defer f.Close()
-
-	input := Input{}
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		i := scanner.Text()
-		input = append(input, i)
-	}
-
-	return &input, nil
 }
 
 func (i *Input) parse() *Passports {
@@ -179,10 +161,11 @@ func (p *Passport) isValid() bool {
 }
 
 func main() {
-	input, err := getInput("input.txt")
-	if err != nil {
-		log.Fatalln(err)
+	i, ok := advent.GetInput("input.txt").(*[]string)
+	if !ok {
+		log.Fatalln("Unable to make type assertion on input")
 	}
+	input := Input(*i)
 
 	passports := input.parse()
 
