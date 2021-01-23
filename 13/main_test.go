@@ -13,3 +13,11 @@ func TestPartOne(t *testing.T) {
 
 	assert.Equal(t, expectedValue, actualValue)
 }
+
+func TestPartTwo(t *testing.T) {
+	_, input := parseInput("test-input.txt")
+	expectedValue := 1068781
+	actualValue := getPartTwoAnswer(input)
+
+	assert.Equal(t, expectedValue, actualValue)
+}
