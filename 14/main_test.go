@@ -14,7 +14,7 @@ func TestPartOne(t *testing.T) {
 		log.Fatal("Unable to make type assertion on input")
 	}
 
-	expectedOutput := 165
+	expectedOutput := int64(165)
 	actualOutput := getPartOneAnswer(input)
 
 	assert.Equal(t, expectedOutput, actualOutput)
@@ -27,7 +27,7 @@ func TestPartTwo(t *testing.T) {
 		log.Fatal("Unable to make type assertion on input")
 	}
 
-	expectedOutput := 208
+	expectedOutput := int64(208)
 	actualOutput := getPartTwoAnswer(input)
 
 	assert.Equal(t, expectedOutput, actualOutput)
